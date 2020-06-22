@@ -2,7 +2,7 @@ package ru.neoflex.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseSaveGetTestimony {
+public class ResponseSaveTestimony {
 
 	@SerializedName("date")
 	private String date;

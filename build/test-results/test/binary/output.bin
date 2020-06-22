@@ -1,0 +1,3 @@
+$ChangePriceTest : statusCode : 200
+%OldTestimonyTest : statusCode : 200
+&SaveTestimonyTest : statusCode : 200

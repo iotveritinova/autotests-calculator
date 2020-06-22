@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.vtb.neoflex.autotests.SaveTestimonyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-06-22T14:20:57" hostname="WS64-073" time="0.523">
+  <properties/>
+  <testcase name="checkCodeSuccessTest" classname="ru.vtb.neoflex.autotests.SaveTestimonyTest" time="0.523"/>
+  <system-out><![CDATA[SaveTestimonyTest : statusCode : 200
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
