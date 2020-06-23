@@ -1,9 +1,12 @@
 package ru.vtb.neoflex.autotests;
 
 import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;
 //аннотация тест по какой то прочине не отрабатывает в jupiter
-import org.junit.Test;
+//решено
+//File->Settings->Build, Execution...->Build Tools->Gradle gradle jvm должно быть 11 версия
+// +run test using должно использовать idea, а не gradle+ в build.gradle не хватало блока test {useJUnitPlatform()}
+//import org.junit.Test;
 
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.CurrentTestimony;

@@ -1,6 +1,6 @@
 package ru.vtb.neoflex.autotests;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.Price;
