@@ -48,7 +48,6 @@ public class ChangePriceTest {
             double hotWater = expectedRsult.getInt("priceHotWater");
             double gas = expectedRsult.getInt("priceGas");
             double electricity = expectedRsult.getInt("priceElectricity");
-            //Assertions.assertEquals(date, requestSetPrice.getDate());
             Assertions.assertEquals(coldWater, requestSetPrice.getPrice().getPriceColdWater());
             Assertions.assertEquals(hotWater, requestSetPrice.getPrice().getPriceHotWater());
             Assertions.assertEquals(gas, requestSetPrice.getPrice().getPriceGas());
