@@ -1,0 +1,18 @@
+[
+  {
+    "price": {
+      "priceColdWater": 1050,
+      "priceHotWater": 123,
+      "priceGas": 124,
+      "priceElectricity": 12412412
+    }
+  },
+  {
+    "price": {
+      "priceColdWater": 6060,
+      "priceHotWater": 379,
+      "priceGas": 452,
+      "priceElectricity": 10809080
+    }
+  }
+]

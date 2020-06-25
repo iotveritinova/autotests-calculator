@@ -1,55 +1,45 @@
 package ru.vtb.neoflex.autotests;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 //аннотация тест по какой то прочине не отрабатывает в jupiter
 //решено
 //File->Settings->Build, Execution...->Build Tools->Gradle gradle jvm должно быть 11 версия
 // +run test using должно использовать idea, а не gradle+ в build.gradle не хватало блока test {useJUnitPlatform()}
 //import org.junit.Test;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.dao.MySqlConnector;
-import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
 import ru.neoflex.model.ResponseSaveTestimony;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+
+import static ru.vtb.neoflex.autotests.TestBase.validRequestSave;
 
 public class SaveTestimonyTest {
-    @Test
-    public void checkCodeSuccessTest() {
-        String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
-        RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
-        CurrentTestimony currentTestimony = new CurrentTestimony();
+    static String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
 
-        requestSaveTestimony.setDate("02-2020");
-        currentTestimony.setColdWater(30);
-        currentTestimony.setHotWater(40);
-        currentTestimony.setGas(50);
-        currentTestimony.setElectricity(60);
-        requestSaveTestimony.setCurrentTestimony(currentTestimony);
+    public static Iterator<Object[]> dataRead() throws IOException {
+        String requestFile = "src/test/resources/SaveTestimonyTest.json";
+        return validRequestSave(requestFile);
+    }
 
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    public void checkCodeSuccessTest(RequestSaveTestimony requestSaveTestimony) {
         int actualStatusCode = RequestTestController.getRequestCodeSaveTestimony(saveTestimonyURI, requestSaveTestimony);
         Assertions.assertEquals(200, actualStatusCode);
-        System.out.println("SaveTestimonyTest : "+"statusCode : " + actualStatusCode);
-
-
     }
-    @Test
-    public void checkFaultCodeSuccessTest() throws SQLException {
-        String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
-        RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
-        CurrentTestimony currentTestimony = new CurrentTestimony();
 
-        requestSaveTestimony.setDate("02-2020");
-        currentTestimony.setColdWater(30);
-        currentTestimony.setHotWater(40);
-        currentTestimony.setGas(50);
-        currentTestimony.setElectricity(60);
-        requestSaveTestimony.setCurrentTestimony(currentTestimony);
-
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    //@Test
+    public void checkFaultCodeSuccessTest(RequestSaveTestimony requestSaveTestimony) throws SQLException {
         ResponseSaveTestimony responseSaveTestimony = RequestTestController.getResponseBodySave(saveTestimonyURI, requestSaveTestimony);
         String resultCode = responseSaveTestimony.getFaultcode().getResultCode();
         String resultText = responseSaveTestimony.getFaultcode().getResultText();

@@ -10,20 +10,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class OldTestimonyTest {
+    String testimonyDate = "05-2020";
+    String oldTestimonyURI = String.format("http://localhost:8080/services/testimony/get/old/testimony/%s", testimonyDate);
+
     @Test
     public void checkCodeSuccessTest() {
-        String testimonyDate = "01-2020";
-        String oldTestimonyURI = String.format("http://localhost:8080/services/testimony/get/old/testimony/%s", testimonyDate);
         int actualStatusCode = RequestTestController.getRequestCodeGetOldTestimony(oldTestimonyURI);
         Assertions.assertEquals(200, actualStatusCode);
-        System.out.println("OldTestimonyTest : " + "statusCode : " + actualStatusCode);
     }
 
     @Test
     public void checkFaultCodeSuccessTest() throws SQLException {
-        String testimonyDate = "02-2020";
-        String oldTestimonyURI = String.format("http://localhost:8080/services/testimony/get/old/testimony/%s", testimonyDate);
-
         ResponseOldTestimony responseBodyGetOld = RequestTestController.getResponseBodyGetOld(oldTestimonyURI);
         String resultCode = responseBodyGetOld.getFaultcode().getResultCode();
         String resultText = responseBodyGetOld.getFaultcode().getResultText();
