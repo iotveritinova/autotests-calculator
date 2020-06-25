@@ -9,9 +9,13 @@ import org.junit.jupiter.api.Test;
 //import org.junit.Test;
 
 import ru.neoflex.controllers.RequestTestController;
+import ru.neoflex.dao.MySqlConnector;
 import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
 import ru.neoflex.model.ResponseSaveTestimony;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SaveTestimonyTest {
     @Test
@@ -34,7 +38,7 @@ public class SaveTestimonyTest {
 
     }
     @Test
-    public void checkFaultCodeSuccessTest()  {
+    public void checkFaultCodeSuccessTest() throws SQLException {
         String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
         RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
         CurrentTestimony currentTestimony = new CurrentTestimony();
@@ -53,6 +57,21 @@ public class SaveTestimonyTest {
         System.out.println(resultText);
         Assertions.assertEquals("0", resultCode);
         Assertions.assertEquals("success", resultText);
+        //проверка соответствия значений в БД и значений в запросе к микросервису
+        ResultSet expectedRsult = MySqlConnector.selectAllFromBilling(requestSaveTestimony.getDate());
+        System.out.println(expectedRsult.next());
+        while (expectedRsult.next()) {
+            String date = expectedRsult.getString("currentmonth");
+            double coldWater = expectedRsult.getInt("coldWater");
+            double hotWater = expectedRsult.getInt("hotWater");
+            double gas = expectedRsult.getInt("gas");
+            double electricity = expectedRsult.getInt("electricity");
+            Assertions.assertEquals(date, requestSaveTestimony.getDate());
+            Assertions.assertEquals(coldWater, requestSaveTestimony.getCurrentTestimony().getColdWater());
+            Assertions.assertEquals(hotWater, requestSaveTestimony.getCurrentTestimony().getHotWater());
+            Assertions.assertEquals(gas, requestSaveTestimony.getCurrentTestimony().getGas());
+            Assertions.assertEquals(electricity, requestSaveTestimony.getCurrentTestimony().getElectricity());
+        }
 
     }
 }
